@@ -19,12 +19,11 @@ def train_or_load_model():
     model_path = 'purchase_model.pkl'
     scaler_path = 'purchase_scaler.pkl'
     
-    # Intentar cargar modelo existente
     if os.path.exists(model_path) and os.path.exists(scaler_path):
         try:
             model = joblib.load(model_path)
             scaler = joblib.load(scaler_path)
-            print("✓ Modelo cargado desde archivo")
+            print("Modelo cargado")
             return True
         except Exception as e:
             print(f"Error cargando modelo: {e}")
@@ -37,7 +36,6 @@ def train_or_load_model():
             print(f"Cargando datos desde {csv_path}...")
             df = pd.read_csv(csv_path)
             
-            # Usar Age y EstimatedSalary para predecir Purchased
             X = df[['Age', 'EstimatedSalary']].values
             y = df['Purchased'].values
             
@@ -57,8 +55,8 @@ def train_or_load_model():
             joblib.dump(model, model_path)
             joblib.dump(scaler, scaler_path)
             
-            print(f"✓ Modelo entrenado con precisión: {model.score(X_scaled, y):.2%}")
-            print(f"✓ Modelo guardado en {model_path}")
+            print(f"Modelo entrenado con precisión: {model.score(X_scaled, y):.2%}")
+            print(f"Modelo guardado en {model_path}")
             return True
             
         except Exception as e:
